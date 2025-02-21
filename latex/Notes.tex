@@ -1,0 +1,633 @@
+\documentclass[a4paper,10pt]{article}
+
+% ---------- FIXED ISSUES ----------
+\setlength{\headheight}{15.5pt}    % Fix fancyhdr warning
+\setlength{\marginparwidth}{2.5cm} % Fix todonotes warning (if used)
+
+% ---------- PACKAGES ----------
+\usepackage{geometry}     % Adjust page margins
+\geometry{left=2.5cm, right=2.5cm, top=3cm, bottom=3cm}
+
+\usepackage{graphicx}     % Images
+\usepackage{hyperref}     % Hyperlinks
+\usepackage{xcolor}       % Colors
+\usepackage{listings}     % Code formatting
+\usepackage{amsmath}      % Math equations
+\usepackage{booktabs}     % Better tables
+\usepackage{caption}      % Better figure captions
+\usepackage{subcaption}   % Subfigures support
+\usepackage{fancyhdr}     % Header and footer customization
+\usepackage{titlesec}     % Better section titles
+\usepackage{enumitem}     % Custom lists
+\usepackage{minted}       % Highlighted code blocks (requires --shell-escape)
+\usepackage{float}        % Better figure placement
+\usepackage{helvet}       % Use Helvetica (Arial-like font)
+\renewcommand{\familydefault}{\sfdefault} % Set default font to sans-serif
+
+% ---------- COLOR SCHEME ----------
+\definecolor{darkblue}{HTML}{1F3B4D}    % Dark Navy Blue (Headers)
+\definecolor{lightgray}{HTML}{F5F5F5}   % Light Gray (Code Background)
+\definecolor{darkgray}{HTML}{4D4D4D}    % Dark Gray (Text)
+\definecolor{codeblue}{HTML}{007AFF}    % Blue (Keywords)
+\definecolor{codegreen}{HTML}{34C759}   % Green (Strings)
+\definecolor{codepurple}{HTML}{AF52DE}  % Purple (Identifiers)
+
+% ---------- HEADER & FOOTER ----------
+\pagestyle{fancy}
+\fancyhf{}
+
+\fancyhead[L]{\textbf{\textcolor{darkblue}{Beontag}}}
+\fancyhead[R]{\textcolor{darkgray}{Global BI Team}}
+
+% Extend the header rule to full width
+\renewcommand{\headrulewidth}{1pt}
+\renewcommand{\headrule}{
+    \hrule width \headwidth height 1pt
+}
+
+\fancyfoot[C]{\textcolor{darkgray}{\thepage}}
+
+% ---------- LISTINGS SETUP ----------
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\footnotesize\color{darkgray},
+    keywordstyle=\bfseries\color{codeblue},
+    stringstyle=\color{codegreen},
+    commentstyle=\color{darkgray},
+    identifierstyle=\color{codepurple},
+    breaklines=true,
+    frame=single,
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    backgroundcolor=\color{lightgray},
+    rulecolor=\color{darkblue},
+    xleftmargin=15pt,
+    framexleftmargin=10pt
+}
+
+\begin{document}
+
+% ---------- TITLE PAGE ----------
+\begin{titlepage}
+    \centering
+    \includegraphics[width=0.7\textwidth]{beontag_logo.png}
+
+    \vspace{2cm}
+    {\LARGE\textbf{\textcolor{darkblue}{BEONTAG}}} \\
+    \vspace{0.5cm}
+    {\Large\textcolor{darkgray}{Global BI }}
+
+    \vfill
+    {\LARGE \sffamily \textbf{Pedro Mendes}} \\
+    {\large petter.mendes@outlook.com}
+    
+    \vspace{1.5cm}
+    {\large \textcolor{darkgray}{February 20, 2025}}
+\end{titlepage}
+
+% ---------- TABLE OF CONTENTS ----------
+\tableofcontents
+\newpage
+
+%--------------------------------------------------------------
+%   CHAPTER 1: INTRODUCTION
+%--------------------------------------------------------------
+\chapter{Introduction}
+
+\section{The Data ETL Proposal}
+The \textbf{Multi-ERP Integration Master Pipeline} is a comprehensive, enterprise-grade framework that unifies and optimizes data from seven leading ERPs, all within a Snowflake fortress on AWS. Built with Python, advanced Machine Learning, and Power BI, this pipeline revolutionizes procurement, financial reporting, product analytics, and executive risk oversight.
+
+\subsection{Core Strengths}
+\begin{itemize}[leftmargin=2em]
+    \item \textbf{ERP Ecosystem:} SAP S/4HANA, Oracle Hyperion, JD Edwards, Datasul, TOTVS, Senior Sistemas, Teamsystem
+    \item \textbf{Strategic Imperatives:}
+    \begin{itemize}[leftmargin=1.5em]
+        \item Procurement Optimization
+        \item PnL Precision
+        \item Margin Enhancement
+        \item Cash Flow Foresight
+        \item Inventory Dominance
+        \item Financial Risk Management
+    \end{itemize}
+    \item \textbf{Technology Edge:} Python, AWS S3, Snowflake, Power BI, Prophet (ML)
+\end{itemize}
+
+\subsection{Identified Positive Impacts}
+\begin{itemize}[leftmargin=2em]
+    \item \textbf{Forecast Accuracy Gain:} ML-driven financial projections
+    \item \textbf{Inventory Cost Reduction:} Automated reorder point \& safety stock calculations
+    \item \textbf{Analytics Acceleration:} Pre-aggregated BI metrics for near real-time insights
+    \item \textbf{Enhanced Risk Visibility:} Built-in financial and operational risk indicators
+\end{itemize}
+
+%--------------------------------------------------------------
+%   CHAPTER 2: SYSTEM ARCHITECTURE AND ERP OVERVIEWS
+%--------------------------------------------------------------
+\chapter{System Architecture and ERP Overviews}
+
+\section{High-Level Pipeline Description}
+The pipeline orchestrates:
+\begin{enumerate}[leftmargin=2em]
+    \item \textbf{Extraction:} Ingesting data from seven diverse ERPs
+    \item \textbf{Transformation:} Standardizing, cleaning, and enriching data
+    \item \textbf{Loading:} Delivering refined data to AWS S3 and Snowflake
+    \item \textbf{Analysis:} Reporting and machine learning in Power BI and Python
+\end{enumerate}
+
+\section{ERP-Specific Extraction Details}
+Below are the primary systems and SQL examples for data extraction. Each ERP includes key tables and additional factors or calculations.
+
+%--------------------------------------------------------------
+% SAP S/4HANA
+%--------------------------------------------------------------
+\subsection{SAP S/4HANA: Procurement Titan}
+\textbf{Purpose:} Acquire comprehensive PO data—headers, items, delivery. Also captures supplier master data and invoice tracking.
+
+\textbf{Key Tables:}
+\begin{itemize}[leftmargin=2em]
+    \item EKKO: PO Header
+    \item EKPO: PO Items
+    \item EKET: Schedule Lines
+    \item LFA1: Vendor Master (optional)
+\end{itemize}
+
+\noindent
+\textbf{SQL Query Example:}
+\begin{lstlisting}[language=SQL]
+SELECT 
+    EKKO.EBELN AS PurchaseOrder,
+    EKKO.LIFNR AS Vendor,
+    EKPO.MATNR AS Material,
+    EKPO.MENGE AS Quantity,
+    EKPO.NETPR AS UnitPrice,
+    EKET.EINDT AS DeliveryDate
+FROM S4HANA.EKKO
+INNER JOIN S4HANA.EKPO
+    ON EKKO.EBELN = EKPO.EBELN
+LEFT JOIN S4HANA.EKET
+    ON EKPO.EBELN = EKET.EBELN
+    AND EKPO.EBELP = EKET.EBELP
+WHERE 
+    EKKO.BSART IN ('NB','ZNB')
+    AND EKKO.AEDAT >= '20240101'
+    AND EKPO.LOEKZ = ''
+\end{lstlisting}
+
+\textbf{Additional Factors:}
+\begin{itemize}[leftmargin=2em]
+    \item \textbf{Vendor Performance:} Join with LFA1 for vendor rating/payment terms
+    \item \textbf{Gr/Ir (Goods Receipt/Invoice Receipt):} Compare receipts vs. invoiced amounts
+    \item \textbf{Potential Calculations:}
+    \begin{itemize}[leftmargin=1.5em]
+        \item \texttt{POtoGRTime} = difference(PO creation, goods receipt date)
+        \item \texttt{InvoicePaymentDelta} = difference(invoice date, actual payment date)
+    \end{itemize}
+\end{itemize}
+
+%--------------------------------------------------------------
+% Oracle Hyperion
+%--------------------------------------------------------------
+\subsection{Oracle Hyperion: Financial Beacon}
+\textbf{Purpose:} Capture financial balances and detailed accounts, often used for consolidated financial statements, IFRS reporting, and scenario planning.
+
+\textbf{Key Tables:}
+\begin{itemize}[leftmargin=2em]
+    \item BALANCES: (b.ACCOUNT, b.PERIOD, b.VALUE, b.ENTITY, b.SCENARIO)
+    \item ACCOUNTS: (a.ACCOUNT\_ID, a.DESCRIPTION, a.ACCOUNT\_TYPE)
+\end{itemize}
+
+\textbf{SQL Query Example:}
+\begin{lstlisting}[language=SQL]
+SELECT 
+    b.ACCOUNT AS AccountCode,
+    b.PERIOD AS Period,
+    b.VALUE AS Amount,
+    b.ENTITY AS Entity,
+    b.SCENARIO AS Scenario,
+    a.DESCRIPTION AS AccountDescription,
+    a.ACCOUNT_TYPE AS AccountType
+FROM HFM_DATA.BALANCES b
+INNER JOIN HFM_DATA.ACCOUNTS a
+    ON b.ACCOUNT = a.ACCOUNT_ID
+WHERE 
+    b.SCENARIO = 'ACTUAL'
+    AND b.YEAR = '2024'
+    AND (b.ACCOUNT LIKE 'REV%' OR b.ACCOUNT LIKE 'EXP%')
+\end{lstlisting}
+
+\textbf{Additional Factors:}
+\begin{itemize}[leftmargin=2em]
+    \item IFRS vs. GAAP
+    \item FX Conversion
+    \item Potential Calculations:
+    \begin{itemize}[leftmargin=1.5em]
+        \item \texttt{EBITDA} = (Revenue - Expenses + Other Income)
+        \item \texttt{CashFlowOps} = Summation of net changes in relevant accounts
+        \item \texttt{ScenarioComparisons} = Actual vs. Budget vs. Forecast
+    \end{itemize}
+\end{itemize}
+
+%--------------------------------------------------------------
+% JD Edwards
+%--------------------------------------------------------------
+\subsection{JD Edwards: Margin Architect}
+\textbf{Purpose:} Evaluate margins by analyzing sales price vs. unit cost, plus overhead or labor cost integration.
+
+\textbf{Key Tables:}
+\begin{itemize}[leftmargin=2em]
+    \item F4105: Cost references
+    \item F4211: Sales orders
+\end{itemize}
+
+\textbf{SQL Query Example:}
+\begin{lstlisting}[language=SQL]
+SELECT
+    F4105.IMLITM AS ItemNumber,
+    (F4211.SDUPRC / 10000) AS UnitPrice,
+    (F4105.COUNCS / 10000) AS UnitCost,
+    F4211.SDQSOL AS QuantitySold,
+    ((F4211.SDUPRC - F4105.COUNCS) / 10000) * F4211.SDQSOL AS Margin
+FROM JDE_DTA.F4105
+INNER JOIN JDE_DTA.F4211
+    ON F4105.IMLITM = F4211.SDLITM
+WHERE
+    F4211.SDIVD >= '20240101'
+    AND F4211.SDQSOL > 0
+\end{lstlisting}
+
+\textbf{Additional Factors:}
+\begin{itemize}[leftmargin=2em]
+    \item Overhead Rates
+    \item Rebates or Discounts
+    \item Potential Calculations:
+    \begin{itemize}[leftmargin=1.5em]
+        \item \texttt{LaborCostPercentage} = (LaborCost / UnitCost) * 100
+        \item \texttt{OverheadAbsorption} = Overhead per item * QuantitySold
+    \end{itemize}
+\end{itemize}
+
+%--------------------------------------------------------------
+% TOTVS
+%--------------------------------------------------------------
+\subsection{TOTVS: Procurement Data Extraction}
+\textbf{Purpose:} Collect POs and corresponding items, integrating with TOTVS RM or Protheus.
+
+\textbf{Key Tables:}
+\begin{itemize}[leftmargin=2em]
+    \item TSI1030: PO Header
+    \item TSI1040: PO Items
+\end{itemize}
+
+\textbf{SQL Query Example:}
+\begin{lstlisting}[language=SQL]
+SELECT
+    TSI1030.NUM_PEDIDO,
+    TSI1030.DATA_EMISSAO,
+    TSI1030.FORNECEDOR_ID,
+    TSI1030.COND_PAGTO,
+    TSI1040.COD_PRODUTO,
+    TSI1040.QTD_PEDIDO,
+    TSI1040.VAL_UNITARIO,
+    TSI1040.QTD_ENTREGUE,
+    TSI1040.DESCONTO,
+    TSI1030.STATUS_PEDIDO
+FROM TOTVS.TSI1030
+INNER JOIN TOTVS.TSI1040
+    ON TSI1030.NUM_PEDIDO = TSI1040.NUM_PEDIDO
+WHERE
+    TSI1030.STATUS_PEDIDO = 'APROVADO'
+    AND TSI1030.DATA_EMISSAO >= '20240101'
+\end{lstlisting}
+
+\textbf{Additional Factors:}
+\begin{itemize}[leftmargin=2em]
+    \item Payment Terms
+    \item Discount Management
+    \item Potential Calculations:
+    \begin{itemize}[leftmargin=1.5em]
+        \item \texttt{EffectiveUnitPrice} = VAL\_UNITARIO - DESCONTO
+        \item \texttt{PayableDays} = parse \texttt{COND\_PAGTO} to compute average days to pay
+    \end{itemize}
+\end{itemize}
+
+%--------------------------------------------------------------
+% Datasul
+%--------------------------------------------------------------
+\subsection{Datasul: Procurement Data Extraction}
+\textbf{Purpose:} Obtain PO headers \& item details, plus additional supplier or item group references.
+
+\textbf{Key Tables:}
+\begin{itemize}[leftmargin=2em]
+    \item COMPRAS\_PEDIDOS
+    \item ITENS\_COMPRA
+\end{itemize}
+
+\textbf{SQL Query Example:}
+\begin{lstlisting}[language=SQL]
+SELECT
+    cp.COD_PEDIDO,
+    cp.DATA_EMISSAO,
+    cp.COD_FORNEC,
+    cp.STATUS,
+    ic.COD_ITEM,
+    ic.QTD_PEDIDA,
+    ic.VALOR_UNITARIO,
+    ic.QTD_ENTREGUE,
+    ic.DESCONTO_ITEM
+FROM DATASUL.COMPRAS_PEDIDOS cp
+INNER JOIN DATASUL.ITENS_COMPRA ic
+    ON cp.COD_PEDIDO = ic.COD_PEDIDO
+WHERE
+    cp.STATUS = 'APROVADO'
+    AND cp.DATA_EMISSAO >= '2024-01-01'
+    AND ic.SITUACAO = 'CONFIRMADO'
+\end{lstlisting}
+
+\textbf{Potential Calculations:}
+\begin{itemize}[leftmargin=2em]
+    \item \texttt{AdjustedUnitPrice} = VALOR\_UNITARIO * (1 - DESCONTO\_ITEM / 100)
+    \item \texttt{FillRate} = (QTD\_ENTREGUE / QTD\_PEDIDA) * 100
+\end{itemize}
+
+%--------------------------------------------------------------
+% Senior Sistemas
+%--------------------------------------------------------------
+\subsection{Senior Sistemas (2.1.6): Procurement Data Extraction}
+\textbf{Purpose:} Aggregate approved purchase orders for deeper analytics.
+
+\textbf{Key Tables:}
+\begin{itemize}[leftmargin=2em]
+    \item PEDIDO\_COMPRA: PO header
+    \item ITENS\_PEDIDO: PO items
+\end{itemize}
+
+\textbf{SQL Query Example:}
+\begin{lstlisting}[language=SQL]
+SELECT
+    pc.NUMERO_PEDIDO,
+    pc.DATA_EMISSAO,
+    ip.CODIGO_PRODUTO,
+    ip.QUANTIDADE,
+    ip.VALOR_UNITARIO,
+    ip.DATA_ENTREGA,
+    pc.STATUS
+FROM SENIOR.PEDIDO_COMPRA pc
+INNER JOIN SENIOR.ITENS_PEDIDO ip
+    ON pc.NUMERO_PEDIDO = ip.NUMERO_PEDIDO
+WHERE
+    pc.STATUS = 'APROVADO'
+    AND pc.DATA_EMISSAO >= '2024-01-01'
+\end{lstlisting}
+
+\textbf{Potential Calculations:}
+\begin{itemize}[leftmargin=2em]
+    \item \texttt{OnTimeDeliveryRate} = \#(on-time orders) / \#(total orders)
+    \item \texttt{WorkforceCostRatio} = portion of payroll allocated to procurement ops
+\end{itemize}
+
+%--------------------------------------------------------------
+% Teamsystem
+%--------------------------------------------------------------
+\subsection{Teamsystem (2.1.7): Procurement Data Extraction}
+\textbf{Purpose:} Retrieve order data and item-level specifics, often used in EU markets.
+
+\textbf{Key Tables:}
+\begin{itemize}[leftmargin=2em]
+    \item ORDINI\_ACQUISTO: PO header
+    \item DETTAGLI\_ORDINI: PO items
+\end{itemize}
+
+\textbf{SQL Query Example:}
+\begin{lstlisting}[language=SQL]
+SELECT
+    oa.ID_ORDINE,
+    oa.DATA_ORDINE,
+    do.CODICE_ARTICOLO,
+    do.QUANTITA,
+    do.PREZZO_UNITARIO,
+    do.DATA_CONSEGNA,
+    oa.STATO
+FROM TEAMSYS.ORDINI_ACQUISTO oa
+INNER JOIN TEAMSYS.DETTAGLI_ORDINI do
+    ON oa.ID_ORDINE = do.ID_ORDINE
+WHERE
+    oa.STATO = 'APPROVATO'
+    AND oa.DATA_ORDINE >= '20240101'
+\end{lstlisting}
+
+\textbf{Potential Calculations:}
+\begin{itemize}[leftmargin=2em]
+    \item \texttt{VATAmount} = PREZZO\_UNITARIO * QUANTITA * VATRate
+    \item \texttt{DeliveryFulfillment\%} = (DeliveredQty / QUANTITA) * 100
+\end{itemize}
+
+%--------------------------------------------------------------
+%   CHAPTER 3: DATA TRANSFORMATION
+%--------------------------------------------------------------
+\chapter{Data Transformation}
+
+\section{Procurement Transformation}
+\begin{enumerate}[leftmargin=2em]
+    \item \textbf{Standardization:} Convert columns to unified names (\texttt{PurchaseOrder}, \texttt{Item}, \texttt{Quantity}, \texttt{UnitPrice}, etc.)
+    \item \textbf{Aggregation:} Group by (\texttt{PurchaseOrder}, \texttt{Item}); sum \texttt{Quantity}, average \texttt{UnitPrice}
+    \item \textbf{Enrichment:}
+    \begin{itemize}[leftmargin=1.5em]
+        \item \texttt{TotalCost} = Quantity $\times$ UnitPrice
+        \item \texttt{SupplierLeadTime} = difference(approval date, scheduled delivery date)
+        \item \texttt{DaysToDelivery} = difference(system date, actual delivery date)
+        \item \texttt{Source} = label ERP origin
+    \end{itemize}
+    \item \textbf{Validation:} Remove duplicates, ensure \texttt{Quantity > 0}, etc.
+    \item \textbf{ML-Ready Fields:} Feature engineering for vendor reliability, historical delays, payment trends
+\end{enumerate}
+
+\section{PnL Transformation}
+\begin{enumerate}[leftmargin=2em]
+    \item \textbf{Aggregation:} Group by (\texttt{AccountCode}, \texttt{Period}, \texttt{Entity}); sum \texttt{Amount}
+    \item \textbf{Categorization:} Assign accounts to \texttt{Revenue}, \texttt{Expense}, or \texttt{COGS}
+    \item \textbf{Enrichment:}
+    \begin{itemize}[leftmargin=1.5em]
+        \item \texttt{AmountUSD} = \texttt{Amount} $\times$ 0.19 (example FX rate)
+        \item \texttt{Variance\%} = $\dfrac{\texttt{Amount} - \texttt{lag(Amount)}}{\texttt{lag(Amount)}} \times 100$
+        \item \texttt{OperatingMargin} = $(\text{Revenue} - \text{Expense}) / \text{Revenue} \times 100$
+        \item \texttt{NetIncome} = Revenue - (Expense + COGS)
+    \end{itemize}
+    \item \textbf{Risk and Finance Metrics:}
+    \begin{itemize}[leftmargin=1.5em]
+        \item \textbf{Liquidity Ratio:} CurrentAssets / CurrentLiabilities
+        \item \textbf{VaR:} approximate daily/monthly revenue volatility
+        \item \textbf{BudgetvsActual:} if relevant budget data is loaded
+    \end{itemize}
+    \item \textbf{Forecast Add-On:} Prophet or ARIMA for monthly forecasted \texttt{Amount}
+\end{enumerate}
+
+\section{Product Margin Transformation}
+\begin{enumerate}[leftmargin=2em]
+    \item \textbf{Aggregation:} Summarize by \texttt{ItemNumber}; sum \texttt{Margin}, sum \texttt{QuantitySold}, mean \texttt{UnitPrice}, mean \texttt{UnitCost}
+    \item \textbf{Enrichment:}
+    \begin{itemize}[leftmargin=1.5em]
+        \item \texttt{MarginPercentage} = $\dfrac{\texttt{Margin}}{\texttt{UnitPrice} \times \texttt{QuantitySold}} \times 100$
+        \item \texttt{Profitability} = categorize(Margin, thresholds=[0, 5000, 20000])
+        \item \texttt{CostToPriceRatio} = $(\texttt{UnitCost} / \texttt{UnitPrice})$
+    \end{itemize}
+    \item \textbf{Validation:} \texttt{fillna(0)} for missing cost/sales fields.
+    \item \textbf{Advanced Calculations:}
+    \begin{itemize}[leftmargin=1.5em]
+        \item \texttt{GrossMarginTrend} = rolling 3-month average of margin
+        \item \texttt{BreakEvenPoint} = $\dfrac{\texttt{fixedCosts}}{\texttt{UnitPrice} - \texttt{UnitCost}}$
+    \end{itemize}
+\end{enumerate}
+
+%--------------------------------------------------------------
+%   CHAPTER 4: DATA LOADING AND FORTIFICATION
+%--------------------------------------------------------------
+\chapter{Data Loading and Fortification}
+
+\section{AWS S3 Staging}
+\begin{itemize}[leftmargin=2em]
+    \item \textbf{Process:} Convert data to Parquet (Snappy compression), upload to \texttt{s3://erp-data-bucket/processed/}
+    \item \textbf{Output:} Partitioned \& versioned Parquet (e.g., \texttt{procurement\_20250221.parquet})
+\end{itemize}
+
+\section{Snowflake Loading}
+\begin{enumerate}[leftmargin=2em]
+    \item Create tables (\texttt{ERP\_PROCUREMENT}, \texttt{ERP\_PNL}, \texttt{ERP\_PRODUCT\_MARGIN}) with adaptive column definitions
+    \item Stage Parquet with \texttt{PUT}, then \texttt{COPY INTO} to load Snowflake tables
+    \item Optionally configure Snowflake Streams for incremental data
+\end{enumerate}
+
+\section{Data Fortification}
+Once transformed, data resides in:
+\begin{itemize}[leftmargin=2em]
+    \item \textbf{AWS S3:} Flexible, durable data lake
+    \item \textbf{Snowflake:} High-performance data warehouse with advanced query optimization
+\end{itemize}
+
+For stakeholders needing Excel outputs, an automated export (via \texttt{XlsxWriter} or \texttt{OpenPyXL}) can:
+\begin{itemize}[leftmargin=2em]
+    \item Generate pivot tables on the processed data
+    \item Save dashboards into \texttt{.xlsx} format
+    \item Email or store these Excel files in a shared drive or cloud storage for executive review
+\end{itemize}
+
+%--------------------------------------------------------------
+%   CHAPTER 5: BI AND ANALYTICS
+%--------------------------------------------------------------
+\chapter{BI and Analytics}
+
+\section{Power BI Integration}
+\subsection{Live Connection}
+Leverage \textbf{Snowflake Direct Query}:
+\begin{verbatim}
+Server:   account.region.snowflakecomputing.com
+Database: ERP_DATA
+Schema:   PUBLIC
+\end{verbatim}
+
+\subsection{Inventory Command and Additional KPIs}
+\textbf{Safety Stock (DAX Example):}
+\begin{lstlisting}[language=SQL]
+SafetyStock =
+    AVERAGE('ERP_PRODUCT_MARGIN'[QuantitySold]) * 1.5
+\end{lstlisting}
+
+\textbf{Lead Time Deviation (DAX):}
+\begin{lstlisting}[language=SQL]
+LeadTimeDeviation =
+    STDEVX.P('ERP_PROCUREMENT', 'ERP_PROCUREMENT'[DaysToDelivery])
+\end{lstlisting}
+
+\textbf{Service Level (DAX):}
+\begin{lstlisting}[language=SQL]
+ServiceLevel =
+    1 - (
+        SUM('ERP_PROCUREMENT'[LateDeliveries]) /
+        SUM('ERP_PROCUREMENT'[TotalDeliveries])
+    )
+\end{lstlisting}
+
+\subsection{Advanced Pre-Calculations}
+\begin{itemize}[leftmargin=2em]
+    \item \textbf{ForecastedAmount:} Prophet or ARIMA for PnL forecasting
+    \item \textbf{SupplierRiskScore:} Weighted score of delivery performance, lead time variance, quality metrics
+    \item \textbf{ProductLifecycleStage:} Category mapping based on sales velocity \& margin trends
+\end{itemize}
+
+%--------------------------------------------------------------
+%   CHAPTER 6: DEPLOYMENT AND IMPLEMENTATION
+%--------------------------------------------------------------
+\chapter{Deployment and Implementation}
+
+\section{System Setup}
+\begin{lstlisting}[language=bash]
+# Clone repository
+git clone https://github.com/yourusername/multi-erp-etl.git
+cd multi-erp-etl
+
+# Install essential dependencies
+pip install -r requirements.txt
+\end{lstlisting}
+
+\section{Core Configuration}
+Update \texttt{config.yaml} with credentials and settings:
+\begin{lstlisting}[language=yaml]
+erp_connections:
+  sap:
+    conn_str: "sap://user:password@host:port/S4HANA"
+aws:
+  s3_bucket: "erp-data-bucket"
+  access_key: "your_aws_access_key"
+snowflake:
+  user: "snowflake_user"
+  account: "account.region"
+  warehouse: "COMPUTE_WH"
+  role: "SYSADMIN"
+\end{lstlisting}
+
+\section{Launch Sequence}
+\begin{lstlisting}[language=bash]
+python main.py
+\end{lstlisting}
+
+\noindent
+\textbf{Outputs:}
+\begin{itemize}[leftmargin=2em]
+    \item \textbf{S3:} Partitioned Parquet files in \texttt{s3://erp-data-bucket/processed/}
+    \item \textbf{Snowflake:} Analytical tables ready for exploration
+    \item \textbf{Logs:} \texttt{erp_integration} captures each stage
+    \item \textbf{Excel Exports:} Automated \texttt{xlsx} files (if configured)
+\end{itemize}
+
+%--------------------------------------------------------------
+%   CHAPTER 7: FLOW VISUALIZATION
+%--------------------------------------------------------------
+\chapter{Flow Visualization}
+
+\section{Interactive Notebooks}
+Explore sample transformations or run ML experiments in Jupyter or Google Colab:
+\begin{itemize}[leftmargin=2em]
+    \item Perform test transformations
+    \item Validate data
+    \item Prototype new ML use cases
+\end{itemize}
+
+%--------------------------------------------------------------
+%   CHAPTER 8: PIONEERING THE FUTURE
+%--------------------------------------------------------------
+\chapter{Pioneering the Future}
+
+\section{Call to Action}
+\begin{itemize}[leftmargin=2em]
+    \item \textbf{Star the Repo:} Show support and follow updates
+    \item \textbf{Contribute:} Fork, branch, or open a PR with enhancements
+\end{itemize}
+
+\section{Visionary Roadmap}
+\begin{itemize}[leftmargin=2em]
+    \item \textbf{ETL Pipeline V1:} Full integration for all 7 ERPs
+    \item \textbf{Machine Learning Upscale:} Predictive insights directly in Power BI
+    \item \textbf{Real-Time Data Streams (Q2 2025):} Ingest via Kafka or Azure Event Hubs
+    \item \textbf{Cost Optimization \& Sustainability Dashboards (Q3 2025)}
+\end{itemize}
+
+\end{document}

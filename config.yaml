@@ -1,0 +1,32 @@
+erp_connections:
+  sap:
+    conn_str: "sap://user:password@host:port/S4HANA"
+  hyperion:
+    conn_str: "oracle://user:password@host:1521/HYPERION"
+  jde:
+    conn_str: "DRIVER={SQL Server};SERVER=host;DATABASE=JDE;UID=user;PWD=password"
+  datasul:
+    conn_str: "postgresql://user:password@host:5432/DATASUL"
+  totvs:
+    conn_str: "mssql://user:password@host:1433/TOTVS"
+  senior:
+    conn_str: "postgresql://user:password@host:5432/SENIOR"
+  teamsystem:
+    conn_str: "mssql://user:password@host:1433/TEAMSYS"
+
+aws:
+  s3_bucket: "erp-data-bucket"
+  access_key: "your_aws_access_key"
+  secret_key: "your_aws_secret_key"
+
+snowflake:
+  user: "snowflake_user"
+  password: "snowflake_password"
+  account: "account.region"
+  warehouse: "compute_wh"
+  database: "ERP_DATA"
+  schema: "PUBLIC"
+
+logging:
+  level: "INFO"
+  file: "erp_integration.log"

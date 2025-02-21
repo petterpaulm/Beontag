@@ -1,0 +1,8 @@
+pandas>=1.5.0
+sqlalchemy>=1.4.0
+pyodbc>=4.0.0
+snowflake-connector-python>=2.7.0
+boto3>=1.24.0
+numpy>=1.23.0
+prophet>=1.1.0
+pyyaml>=6.0.0
