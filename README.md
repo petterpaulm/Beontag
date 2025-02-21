@@ -3,7 +3,7 @@
 
 ![Beontag Logo](./support/beontag_logo.png)
 
-**Data Unleashed | Insights Amplified | Victory Engineered**  
+**Data Unleashed | Insights Amplified**  
 *Version 1.1 | February 20, 2025 | Pedro Mendes | Beontag*
 
 <img src="./support/RFID_giff.gif" alt="ETL Pipeline Animation" width="300">
